@@ -14,7 +14,11 @@ public class App {
 
     public static void main(String[] args) throws SQLException {
         ConnectionDB.getInstance();
+        DatosVO datosvo = new DatosVO();
+        ObtenerDatosGames obtenerDatosGames = new ObtenerDatosGames();
 
+
+        obtenerDatosGames.leerArchivo(datosvo);
 
     }
 
