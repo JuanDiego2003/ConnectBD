@@ -30,4 +30,53 @@ public class EquiposDAO {
         return Lista;
     }
 
+    public static boolean InsertarEquipos(EntidadPadre entidadPadre, Connection connection) {
+        boolean correcto = false;
+        int filasAfectadas = 0;
+        String consulta = "INSERT INTO equipos (id_equipo,equipo) VALUES(?,?)";
+        try (
+                PreparedStatement pstmt = connection.prepareStatement(consulta)) {
+            List<Equipos> generoInsertar =new ArrayList<>();
+            int id = 0;
+            for (Equipos equipo: entidadPadre.getEquipos()) {
+                if (!generoInsertar.contains(equipo)){
+                    equipo.setId_Equipo(id++);
+                    generoInsertar.add(equipo);
+                }
+            }
+            for (Equipos equipo: generoInsertar) {
+                pstmt.setInt(1, equipo.getId_Equipo());
+                pstmt.setString(2, equipo.getEquipo());
+            }
+            correcto = true;
+            filasAfectadas = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            correcto = false;
+            throw new RuntimeException(e);
+        }
+        if (filasAfectadas > 0) {
+            correcto=true;
+        }
+        return correcto;
+    }
+    public static void EliminarEquipos(Equipos equipo, Connection connection) {
+        boolean correcto = false;
+        String consulta = "DELETE FROM equipos WHERE id_equipo = ?";
+        try (
+                PreparedStatement pstmt = connection.prepareStatement(consulta)) {
+            pstmt.setInt(1, equipo.getId_Equipo());
+            pstmt.executeUpdate();
+            correcto = true;
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            correcto = false;
+            throw new RuntimeException(e);
+        }
+        if (correcto) {
+            System.out.println("El registro se ha insertado correctamente.");
+        } else {
+            System.out.println("No se pudo insertar el registro.");
+        }
+    }
+
 }
