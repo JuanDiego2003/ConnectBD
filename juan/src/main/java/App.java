@@ -4,10 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import Entidades.ConnectionDB;
-import Entidades.EntidadPadre;
-import Entidades.EquiposDAO;
-import Entidades.GamesDAO;
+import Entidades.*;
 
 public class App {
     public static File file = new File("games.csv");
@@ -44,7 +41,9 @@ public class App {
                         if (!GamesDAO.InsertarGames(entidad, connection)){
                             correcto = false;
                         }
+                        GamesDAO.ActualizarGames(entidad,connection);
                     }
+
                     if (correcto) {
                         System.out.println("Se han insertado todos los datos del archivo games");
                     } else {
@@ -56,4 +55,5 @@ public class App {
             throw new RuntimeException(e);
         }
     }
+
 }

@@ -85,4 +85,37 @@ public class GamesDAO {
             System.out.println("No se pudo insertar el registro.");
         }
     }
+    public static void ActualizarGames(EntidadPadre entidadPadre, Connection connection) {
+        boolean correcto = false;
+        String consulta = "UPDATE juegos SET titulo=?,fecha_lanzamiento=?,calificacion=?,veces_listado=?,num_resenas=?,resumen=?,num_reproducciones=?,num_jugando=?,num_atrasos=?,num_lista_deseos=? WHERE id_juego = ?";
+        try (
+                PreparedStatement pstmt = connection.prepareStatement(consulta)) {
+            pstmt.setInt(1, entidadPadre.getGames().getId_Game());
+            pstmt.setString(2, entidadPadre.getGames().getTitulo());
+            pstmt.setDate(3, entidadPadre.getGames().getFecha_Lanzamiento());
+            pstmt.setDouble(4, entidadPadre.getGames().getCalificacion());
+            pstmt.setInt(5, entidadPadre.getGames().getVeces_Listado());
+            pstmt.setInt(6, entidadPadre.getGames().getNum_Resenas());
+            pstmt.setString(7, entidadPadre.getGames().getResumen());
+            pstmt.setInt(8, entidadPadre.getGames().getNum_Reproducciones());
+            pstmt.setInt(9, entidadPadre.getGames().getNum_Jugando());
+            pstmt.setInt(10, entidadPadre.getGames().getNum_Atrasos());
+            pstmt.setInt(11, entidadPadre.getGames().getNum_Lista_Deseos());
+            //condicion de eliminar
+            pstmt.setInt(12, entidadPadre.getGames().getId_Game());
+
+
+            pstmt.executeUpdate();
+            correcto = true;
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            correcto = false;
+            throw new RuntimeException(e);
+        }
+        if (correcto) {
+            System.out.println("El registro se ha insertado correctamente.");
+        } else {
+            System.out.println("No se pudo insertar el registro.");
+        }
+    }
 }
