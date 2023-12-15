@@ -1,17 +1,16 @@
 
 import Entidades.EntidadPadre;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class DatosVO {
-    private List<EntidadPadre> entidadPadre = new ArrayList<>();
 
-    public List<EntidadPadre> getEntidadPadre() {
+    private EntidadPadre entidadPadre =new EntidadPadre();
+    public EntidadPadre getEntidadPadre() {
         return entidadPadre;
     }
 
-    public void setEntidadPadre(List<EntidadPadre> entidadPadre) {
+    public void setEntidadPadre(EntidadPadre entidadPadre) {
         this.entidadPadre = entidadPadre;
     }
 }

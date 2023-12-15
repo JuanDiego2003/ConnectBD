@@ -16,8 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ObtenerDatosGames {
-    public void leerArchivo(DatosVO datosvo) {
+    public List<EntidadPadre> leerArchivo() {
         File file = new File("games.csv");
+        List<EntidadPadre> Lista = new ArrayList<>();
         try (
                 Reader reader = Files.newBufferedReader(Paths.get(file.toURI()));
                 CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT)
@@ -26,7 +27,7 @@ public class ObtenerDatosGames {
             for (CSVRecord csvRecord : csvParser) {
                 EntidadPadre entidadPadre = new EntidadPadre();
                 if (!csvRecord.get(0).isEmpty()) {
-                    entidadPadre.getGames().setId_Game(Integer.parseInt(csvRecord.get(0) + 1));
+                    entidadPadre.getGames().setId_Game(Integer.parseInt(csvRecord.get(0))+ 1);
                     entidadPadre.getGames().setTitulo(csvRecord.get(1));
                     entidadPadre.getGames().setFecha_Lanzamiento(Formato.formatoFecha(csvRecord.get(2)));
                     if (csvRecord.get(4).isEmpty()) {
@@ -47,12 +48,13 @@ public class ObtenerDatosGames {
                     entidadPadre.setGeneros(DatosGeneros(csvRecord.get(7)));
                     entidadPadre.setResenas(DatosResenas(csvRecord.get(9)));
 
-                    datosvo.getEntidadPadre().add(entidadPadre);
+                    Lista.add(entidadPadre);
                 }
             }
         } catch (IOException | ParseException e) {
             throw new RuntimeException(e);
         }
+        return Lista;
     }
 
     private List<Equipos> DatosEquipos(String datos) {

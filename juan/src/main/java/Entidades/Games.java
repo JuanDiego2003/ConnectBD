@@ -1,6 +1,7 @@
 package Entidades;
 
-import java.util.Date;
+
+import java.sql.Date;
 
 public class Games {
     private int id_Game;
@@ -31,8 +32,8 @@ public class Games {
         this.titulo = titulo;
     }
 
-    public Date getFecha_Lanzamiento() {
-        return fecha_Lanzamiento;
+    public java.sql.Date getFecha_Lanzamiento() {
+        return  fecha_Lanzamiento;
     }
 
     public void setFecha_Lanzamiento(Date fecha_Lanzamiento) {
