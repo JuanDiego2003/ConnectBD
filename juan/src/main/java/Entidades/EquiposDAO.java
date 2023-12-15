@@ -36,15 +36,15 @@ public class EquiposDAO {
         String consulta = "INSERT INTO equipos (id_equipo,equipo) VALUES(?,?)";
         try (
                 PreparedStatement pstmt = connection.prepareStatement(consulta)) {
-            List<Equipos> generoInsertar =new ArrayList<>();
+            List<Equipos> equipoInsertar =new ArrayList<>();
             int id = 0;
             for (Equipos equipo: entidadPadre.getEquipos()) {
-                if (!generoInsertar.contains(equipo)){
+                if (!equipoInsertar.contains(equipo)){
                     equipo.setId_Equipo(id++);
-                    generoInsertar.add(equipo);
+                    equipoInsertar.add(equipo);
                 }
             }
-            for (Equipos equipo: generoInsertar) {
+            for (Equipos equipo: equipoInsertar) {
                 pstmt.setInt(1, equipo.getId_Equipo());
                 pstmt.setString(2, equipo.getEquipo());
             }
