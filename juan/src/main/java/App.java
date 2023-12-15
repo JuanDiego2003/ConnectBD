@@ -30,7 +30,6 @@ public class App {
     }
 
     private static void InsertarTodosDatos(DatosVO datosvo, List<EntidadPadre> list, boolean inicial) {
-        int cont = 0;
         try (Connection connection = ConnectionDB.getInstance().getConnection()) {
             if (inicial) {
                 if (GamesDAO.ConsultarGames(datosvo.getEntidadPadre(), connection).isEmpty()) {
