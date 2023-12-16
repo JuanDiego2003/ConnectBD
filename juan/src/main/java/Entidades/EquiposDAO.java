@@ -41,7 +41,7 @@ public class EquiposDAO {
             for (Equipos equipo : equipos) {
                 boolean repetido = false;
                 falla.setEquipo(equipo.getEquipo());
-                if (equipo.getEquipo() != null) {
+                if (equipo.getEquipo() != null && !equipo.getEquipo().equalsIgnoreCase("")) {
                     if (!compararExistencia.isEmpty()) {
                         for (Equipos equip : compararExistencia) {
                             if (equip.getEquipo().replaceAll(" ","").equalsIgnoreCase(equipo.getEquipo().replaceAll(" ",""))) {
@@ -59,10 +59,8 @@ public class EquiposDAO {
                         filasAfectadas = pstmt.executeUpdate();
                     }
                     System.out.println(falla.getEquipo());
-                }else{
-                    System.out.println("hola");
-                }
 
+                }
             }
             correcto = true;
 
