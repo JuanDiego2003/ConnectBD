@@ -66,15 +66,15 @@ public class EquiposDAO {
         return correcto;
     }
 
-    public static void EliminarEquipos(Equipos equipo, Connection connection) {
+    public static void EliminarEquipos(int id, Connection connection) {
         boolean correcto = false;
         String consulta = "DELETE FROM equipos WHERE id_equipo = ?";
         try (
                 PreparedStatement pstmt = connection.prepareStatement(consulta)) {
-            pstmt.setInt(1, equipo.getId_Equipo());
-            pstmt.executeUpdate();
-            correcto = true;
-            pstmt.executeUpdate();
+            pstmt.setInt(1, id);
+            if (pstmt.executeUpdate() > 0) {
+                correcto = true;
+            }
         } catch (SQLException e) {
             correcto = false;
             throw new RuntimeException(e);

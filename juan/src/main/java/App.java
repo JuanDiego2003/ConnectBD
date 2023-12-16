@@ -36,17 +36,18 @@ public class App {
                     ObtenerDatosGames obtenerDatosGames = new ObtenerDatosGames();
                     list = obtenerDatosGames.leerArchivo();
                     boolean correcto = true;
+                    List<Equipos> as = new ArrayList<>();
+                    as = (EquiposDAO.ConsultarEquipos(connection));
                     for (EntidadPadre entidad : list) {
-                        EquiposDAO.InsertarEquipos(entidad.getEquipos(),connection);
-
                         //if (GamesDAO.InsertarGames(entidad, connection)){
+                        //EquiposDAO.InsertarEquipos(entidad.getEquipos(),connection);
                             //GenerosDAO.InsertarGeneros(entidad.getGeneros(),connection);
                             //ResenasDAO.InsertarResenas(entidad.getResenas(),connection);
                             correcto = false;
                         //}
                         //GamesDAO.ActualizarGames(entidad,connection);
-                    }
 
+                    }
                     if (correcto) {
                         System.out.println("Se han insertado todos los datos del archivo games");
                     } else {
