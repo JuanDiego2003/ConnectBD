@@ -30,7 +30,6 @@ public class EquiposDAO {
     }
 
     public static boolean InsertarEquipos(List<Equipos> equipos, Connection connection) {
-        Equipos falla = new Equipos();
         boolean correcto = false;
         int filasAfectadas = 0;
         String consulta = "INSERT INTO equipos (id_equipo,equipo) VALUES(?,?)";
@@ -40,11 +39,10 @@ public class EquiposDAO {
             int id = compararExistencia.size();
             for (Equipos equipo : equipos) {
                 boolean repetido = false;
-                falla.setEquipo(equipo.getEquipo());
                 if (equipo.getEquipo() != null && !equipo.getEquipo().equalsIgnoreCase("")) {
                     if (!compararExistencia.isEmpty()) {
                         for (Equipos equip : compararExistencia) {
-                            if (equip.getEquipo().replaceAll(" ","").equalsIgnoreCase(equipo.getEquipo().replaceAll(" ",""))) {
+                            if (equip.getEquipo().replaceAll(" ", "").equalsIgnoreCase(equipo.getEquipo().replaceAll(" ", ""))) {
                                 repetido = true;
                             }
                         }
@@ -52,18 +50,12 @@ public class EquiposDAO {
                     if (!repetido) {
                         id++;
                         pstmt.setInt(1, id);
-                        if (equipo.getEquipo() == null) {
-                            equipo.setEquipo("");
-                        }
                         pstmt.setString(2, equipo.getEquipo());
                         filasAfectadas = pstmt.executeUpdate();
+                        correcto = true;
                     }
-                    System.out.println(falla.getEquipo());
-
                 }
             }
-            correcto = true;
-
         } catch (SQLException e) {
             correcto = false;
             throw new RuntimeException(e);
