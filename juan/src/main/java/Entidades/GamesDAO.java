@@ -8,25 +8,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GamesDAO {
-    public static List<EntidadPadre> ConsultarGames(EntidadPadre entidadPadre, Connection connection) {
-        List<EntidadPadre> Lista = new ArrayList<>();
+    public static List<Games> ConsultarGames(Games games, Connection connection) {
+        List<Games> Lista = new ArrayList<>();
         String consulta = "SELECT * FROM juegos";
         try (
                 PreparedStatement pstmt = connection.prepareStatement(consulta)) {
             try (ResultSet resultado = pstmt.executeQuery()) {
                 while (resultado.next()) {
-                    entidadPadre.getGames().setId_Game(resultado.getInt("id_juego"));
-                    entidadPadre.getGames().setTitulo(resultado.getString("titulo"));
-                    entidadPadre.getGames().setFecha_Lanzamiento(resultado.getDate("fecha_lanzamiento"));
-                    entidadPadre.getGames().setCalificacion(resultado.getDouble("calificacion"));
-                    entidadPadre.getGames().setVeces_Listado(resultado.getInt("veces_listado"));
-                    entidadPadre.getGames().setNum_Resenas(resultado.getInt("num_resenas"));
-                    entidadPadre.getGames().setResumen(resultado.getString("resumen"));
-                    entidadPadre.getGames().setNum_Reproducciones(resultado.getInt("num_reproducciones"));
-                    entidadPadre.getGames().setNum_Jugando(resultado.getInt("num_jugando"));
-                    entidadPadre.getGames().setNum_Atrasos(resultado.getInt("num_atrasos"));
-                    entidadPadre.getGames().setNum_Lista_Deseos(resultado.getInt("num_lista_deseos"));
-                    Lista.add(entidadPadre);
+                    games.setId_Game(resultado.getInt("id_juego"));
+                    games.setTitulo(resultado.getString("titulo"));
+                    games.setFecha_Lanzamiento(resultado.getDate("fecha_lanzamiento"));
+                    games.setCalificacion(resultado.getDouble("calificacion"));
+                    games.setVeces_Listado(resultado.getInt("veces_listado"));
+                    games.setNum_Resenas(resultado.getInt("num_resenas"));
+                    games.setResumen(resultado.getString("resumen"));
+                    games.setNum_Reproducciones(resultado.getInt("num_reproducciones"));
+                    games.setNum_Jugando(resultado.getInt("num_jugando"));
+                    games.setNum_Atrasos(resultado.getInt("num_atrasos"));
+                    games.setNum_Lista_Deseos(resultado.getInt("num_lista_deseos"));
+                    Lista.add(games);
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);

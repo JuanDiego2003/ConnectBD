@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ResenasDAO {
-    public static List<EntidadPadre> ConsultarEquipos(EntidadPadre entidadPadre, Connection connection) {
-        List<EntidadPadre> Lista=new ArrayList<>();
+    public static List<Resenas> ConsultarEquipos(Connection connection) {
+        List<Resenas> lista=new ArrayList<>();
         String consulta = "SELECT * FROM resenas";
         try (
                 PreparedStatement pstmt = connection.prepareStatement(consulta)) {
@@ -18,8 +18,7 @@ public class ResenasDAO {
                     Resenas resenas = new Resenas();
                     resenas.setId_Resena(resultado.getInt("id_resenas"));
                     resenas.setResena(resultado.getString("resenas"));
-                    entidadPadre.getResenas().add(resenas);
-                    Lista.add(entidadPadre);
+                    lista.add(resenas);
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -27,18 +26,18 @@ public class ResenasDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return Lista;
+        return lista;
     }
 
-    public static boolean InsertarResenas(EntidadPadre entidadPadre, Connection connection) {
+    public static boolean InsertarResenas(List<Resenas> resenas, Connection connection) {
         boolean correcto = false;
         int filasAfectadas = 0;
-        String consulta = "INSERT INTO equipos (id_equipo,equipo) VALUES(?,?)";
+        String consulta = "INSERT INTO resenas (id_resena,resena) VALUES(?,?)";
         try (
                 PreparedStatement pstmt = connection.prepareStatement(consulta)) {
             List<Resenas> resenasInsertar = new ArrayList<>();
             int id = 0;
-            for (Resenas resena : entidadPadre.getResenas()) {
+            for (Resenas resena : resenas) {
                 if (!resenasInsertar.contains(resena)) {
                     resena.setId_Resena(id++);
                     resenasInsertar.add(resena);
@@ -47,9 +46,10 @@ public class ResenasDAO {
             for (Resenas equipo : resenasInsertar) {
                 pstmt.setInt(1, equipo.getId_Resena());
                 pstmt.setString(2, equipo.getResena());
+                filasAfectadas = pstmt.executeUpdate();
+
             }
             correcto = true;
-            filasAfectadas = pstmt.executeUpdate();
         } catch (SQLException e) {
             correcto = false;
             throw new RuntimeException(e);
@@ -61,7 +61,7 @@ public class ResenasDAO {
     }
     public static void EliminarResenas(Resenas resenas, Connection connection) {
         boolean correcto = false;
-        String consulta = "DELETE FROM equipos WHERE id_equipo = ?";
+        String consulta = "DELETE FROM resenas WHERE id_resena = ?";
         try (
                 PreparedStatement pstmt = connection.prepareStatement(consulta)) {
             pstmt.setInt(1, resenas.getId_Resena());

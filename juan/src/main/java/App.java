@@ -32,15 +32,19 @@ public class App {
     private static void InsertarTodosDatos(DatosVO datosvo, List<EntidadPadre> list, boolean inicial) {
         try (Connection connection = ConnectionDB.getInstance().getConnection()) {
             if (inicial) {
-                if (GamesDAO.ConsultarGames(datosvo.getEntidadPadre(), connection).isEmpty()) {
+                if (GamesDAO.ConsultarGames(datosvo.getEntidadPadre().getGames(), connection).isEmpty()) {
                     ObtenerDatosGames obtenerDatosGames = new ObtenerDatosGames();
                     list = obtenerDatosGames.leerArchivo();
                     boolean correcto = true;
                     for (EntidadPadre entidad : list) {
-                        if (!GamesDAO.InsertarGames(entidad, connection)){
+                        EquiposDAO.InsertarEquipos(entidad.getEquipos(),connection);
+
+                        //if (GamesDAO.InsertarGames(entidad, connection)){
+                            //GenerosDAO.InsertarGeneros(entidad.getGeneros(),connection);
+                            //ResenasDAO.InsertarResenas(entidad.getResenas(),connection);
                             correcto = false;
-                        }
-                        GamesDAO.ActualizarGames(entidad,connection);
+                        //}
+                        //GamesDAO.ActualizarGames(entidad,connection);
                     }
 
                     if (correcto) {

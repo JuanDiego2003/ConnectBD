@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GenerosDAO {
-    public static List<EntidadPadre> ConsultarEquipos(EntidadPadre entidadPadre, Connection connection) {
-        List<EntidadPadre> Lista = new ArrayList<>();
+    public static List<Generos> ConsultarGeneros(Connection connection) {
+        List<Generos> Lista = new ArrayList<>();
         String consulta = "SELECT * FROM generos";
         try (
                 PreparedStatement pstmt = connection.prepareStatement(consulta)) {
@@ -18,8 +18,7 @@ public class GenerosDAO {
                     Generos genero = new Generos();
                     genero.setId_genero(resultado.getInt("id_genero"));
                     genero.setGenero(resultado.getString("genero"));
-                    entidadPadre.getGeneros().add(genero);
-                    Lista.add(entidadPadre);
+                    Lista.add(genero);
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -30,7 +29,7 @@ public class GenerosDAO {
         return Lista;
     }
 
-    public static boolean InsertarGeneros(EntidadPadre entidadPadre, Connection connection) {
+    public static boolean InsertarGeneros(List<Generos> generos, Connection connection) {
         boolean correcto = false;
         int filasAfectadas = 0;
         String consulta = "INSERT INTO generos (id_genero,genero) VALUES(?,?)";
@@ -38,7 +37,7 @@ public class GenerosDAO {
                 PreparedStatement pstmt = connection.prepareStatement(consulta)) {
             List<Generos> generoInsertar =new ArrayList<>();
             int id = 0;
-            for (Generos genero: entidadPadre.getGeneros()) {
+            for (Generos genero: generos) {
                 if (!generoInsertar.contains(genero)){
                     genero.setId_genero(id++);
                     generoInsertar.add(genero);
