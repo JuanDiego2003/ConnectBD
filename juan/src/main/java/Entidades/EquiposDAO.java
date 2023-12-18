@@ -52,7 +52,6 @@ public class EquiposDAO {
                         pstmt.setInt(1, id);
                         pstmt.setString(2, equipo.getEquipo());
                         filasAfectadas = pstmt.executeUpdate();
-                        correcto = true;
                     }
                 }
             }

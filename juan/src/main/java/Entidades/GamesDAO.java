@@ -8,13 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GamesDAO {
-    public static List<Games> ConsultarGames(Games games, Connection connection) {
+    public static List<Games> ConsultarGames( Connection connection) {
         List<Games> Lista = new ArrayList<>();
         String consulta = "SELECT * FROM juegos";
         try (
                 PreparedStatement pstmt = connection.prepareStatement(consulta)) {
             try (ResultSet resultado = pstmt.executeQuery()) {
                 while (resultado.next()) {
+                    Games games =new Games();
                     games.setId_Game(resultado.getInt("id_juego"));
                     games.setTitulo(resultado.getString("titulo"));
                     games.setFecha_Lanzamiento(resultado.getDate("fecha_lanzamiento"));

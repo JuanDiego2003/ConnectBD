@@ -8,16 +8,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ResenasDAO {
-    public static List<Resenas> ConsultarEquipos(Connection connection) {
-        List<Resenas> lista=new ArrayList<>();
+    public static List<Resenas> ConsultarResenas(Connection connection) {
+        List<Resenas> lista = new ArrayList<>();
         String consulta = "SELECT * FROM resenas";
         try (
                 PreparedStatement pstmt = connection.prepareStatement(consulta)) {
             try (ResultSet resultado = pstmt.executeQuery()) {
                 while (resultado.next()) {
                     Resenas resenas = new Resenas();
-                    resenas.setId_Resena(resultado.getInt("id_resenas"));
-                    resenas.setResena(resultado.getString("resenas"));
+                    resenas.setId_Resena(resultado.getInt("id_resena"));
+                    resenas.setResena(resultado.getString("resena"));
+                    resenas.setId_Game(resultado.getInt("id_juego"));
                     lista.add(resenas);
                 }
             } catch (SQLException e) {
@@ -29,26 +30,37 @@ public class ResenasDAO {
         return lista;
     }
 
-    public static boolean InsertarResenas(List<Resenas> resenas, Connection connection) {
+    public static boolean InsertarResenas(List<Resenas> resenas, int idGame, Connection connection) {
         boolean correcto = false;
         int filasAfectadas = 0;
-        String consulta = "INSERT INTO resenas (id_resena,resena) VALUES(?,?)";
+        String consulta = "INSERT INTO resenas (id_resena,resena,id_juego) VALUES(?,?,?)";
+        Resenas aux = new Resenas();
         try (
                 PreparedStatement pstmt = connection.prepareStatement(consulta)) {
-            List<Resenas> resenasInsertar = new ArrayList<>();
-            int id = 0;
+            List<Resenas> compararExistencia = ConsultarResenas(connection);
+            int id = compararExistencia.size();
             for (Resenas resena : resenas) {
-                if (!resenasInsertar.contains(resena)) {
-                    resena.setId_Resena(id++);
-                    resenasInsertar.add(resena);
+                aux = resena;
+                aux.setId_Game(idGame);
+                boolean repetido = false;
+                if (resena.getResena() != null && !resena.getResena().equalsIgnoreCase("")) {
+                    if (!compararExistencia.isEmpty()) {
+                        for (Resenas resen : compararExistencia) {
+                            if (resena.getResena().replaceAll(" ", "").equalsIgnoreCase(resen.getResena().replaceAll(" ", ""))) {
+                                repetido = true;
+                            }
+                        }
+                    }
+                    if (!repetido) {
+                        id++;
+                        pstmt.setInt(1, id);
+                        pstmt.setString(2, resena.getResena());
+                        pstmt.setInt(3, idGame);
+                        filasAfectadas = pstmt.executeUpdate();
+                    }
                 }
             }
-            for (Resenas equipo : resenasInsertar) {
-                pstmt.setInt(1, equipo.getId_Resena());
-                pstmt.setString(2, equipo.getResena());
-                filasAfectadas = pstmt.executeUpdate();
-
-            }
+            System.out.println(aux.getId_Resena() + aux.getResena() + aux.getId_Game());
             correcto = true;
         } catch (SQLException e) {
             correcto = false;
@@ -59,6 +71,7 @@ public class ResenasDAO {
         }
         return correcto;
     }
+
     public static void EliminarResenas(Resenas resenas, Connection connection) {
         boolean correcto = false;
         String consulta = "DELETE FROM resenas WHERE id_resena = ?";
