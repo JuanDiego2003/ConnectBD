@@ -9,6 +9,9 @@ public class EntidadPadre {
     private List<Equipos> equipos = new ArrayList<>();
     private List<Generos> generos = new ArrayList<>();
 
+    private List<GameEquipos> GameEquipos = new ArrayList<>();
+    private List<GameGeneros> GameGeneros = new ArrayList<>();
+
     public Games getGames() {
         return games;
     }
@@ -39,5 +42,21 @@ public class EntidadPadre {
 
     public void setGeneros(List<Generos> generos) {
         this.generos = generos;
+    }
+
+    public List<Entidades.GameEquipos> getGameEquipos() {
+        return GameEquipos;
+    }
+
+    public void setGameEquipos(List<Entidades.GameEquipos> gameEquipos) {
+        GameEquipos = gameEquipos;
+    }
+
+    public List<Entidades.GameGeneros> getGameGeneros() {
+        return GameGeneros;
+    }
+
+    public void setGameGeneros(List<Entidades.GameGeneros> gameGeneros) {
+        GameGeneros = gameGeneros;
     }
 }

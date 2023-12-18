@@ -39,10 +39,12 @@ public class EquiposDAO {
             int id = compararExistencia.size();
             for (Equipos equipo : equipos) {
                 boolean repetido = false;
-                if (equipo.getEquipo() != null && !equipo.getEquipo().equalsIgnoreCase("") && !compararExistencia.isEmpty()) {
-                    for (Equipos equip : compararExistencia) {
-                        if (equip.getEquipo().replaceAll(" ", "").equalsIgnoreCase(equipo.getEquipo().replaceAll(" ", ""))) {
-                            repetido = true;
+                if (equipo.getEquipo() != null && !equipo.getEquipo().equalsIgnoreCase("")) {
+                    if (!compararExistencia.isEmpty()) {
+                        for (Equipos equip : compararExistencia) {
+                            if (equip.getEquipo().replaceAll(" ", "").equalsIgnoreCase(equipo.getEquipo().replaceAll(" ", ""))) {
+                                repetido = true;
+                            }
                         }
                     }
                     if (!repetido) {

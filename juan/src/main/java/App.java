@@ -40,10 +40,12 @@ public class App {
                     as = (EquiposDAO.ConsultarEquipos(connection));
                     for (EntidadPadre entidad : list) {
                         GamesDAO.InsertarGames(entidad, connection);
-                        //EquiposDAO.InsertarEquipos(entidad.getEquipos(),connection);
-                            //GenerosDAO.InsertarGeneros(entidad.getGeneros(),connection);
-                            ResenasDAO.InsertarResenas(entidad.getResenas(),GamesDAO.ConsultarGames(connection).size(),connection);
-                            correcto = false;
+                        EquiposDAO.InsertarEquipos(entidad.getEquipos(),connection);
+                        GenerosDAO.InsertarGeneros(entidad.getGeneros(),connection);
+                        ResenasDAO.InsertarResenas(entidad.getResenas(),GamesDAO.ConsultarGames(connection).size(),connection);
+                        GameEquipoDAO.InsertarGameEquipos(entidad,connection);
+                        GameGeneroDAO.InsertarGameEquipos(entidad,connection);
+                        correcto = false;
                         //}
                         //GamesDAO.ActualizarGames(entidad,connection);
 

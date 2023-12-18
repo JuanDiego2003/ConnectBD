@@ -39,12 +39,15 @@ public class GenerosDAO {
             int id = compararExistencia.size();
             for (Generos genero : equipos) {
                 boolean repetido = false;
-                if (genero.getGenero() != null && !genero.getGenero().equalsIgnoreCase("")&&!compararExistencia.isEmpty()) {
+                if (genero.getGenero() != null && !genero.getGenero().equalsIgnoreCase("")) {
+                    if (!compararExistencia.isEmpty()) {
+
                         for (Generos equip : compararExistencia) {
                             if (equip.getGenero().replaceAll(" ", "").equalsIgnoreCase(genero.getGenero().replaceAll(" ", ""))) {
                                 repetido = true;
                             }
                         }
+                    }
                     if (!repetido) {
                         id++;
                         pstmt.setInt(1, id);
