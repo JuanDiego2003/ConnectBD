@@ -39,12 +39,10 @@ public class EquiposDAO {
             int id = compararExistencia.size();
             for (Equipos equipo : equipos) {
                 boolean repetido = false;
-                if (equipo.getEquipo() != null && !equipo.getEquipo().equalsIgnoreCase("")) {
-                    if (!compararExistencia.isEmpty()) {
-                        for (Equipos equip : compararExistencia) {
-                            if (equip.getEquipo().replaceAll(" ", "").equalsIgnoreCase(equipo.getEquipo().replaceAll(" ", ""))) {
-                                repetido = true;
-                            }
+                if (equipo.getEquipo() != null && !equipo.getEquipo().equalsIgnoreCase("") && !compararExistencia.isEmpty()) {
+                    for (Equipos equip : compararExistencia) {
+                        if (equip.getEquipo().replaceAll(" ", "").equalsIgnoreCase(equipo.getEquipo().replaceAll(" ", ""))) {
+                            repetido = true;
                         }
                     }
                     if (!repetido) {
@@ -84,5 +82,28 @@ public class EquiposDAO {
             System.out.println("No se pudo insertar el registro.");
         }
     }
+
+    public static List<Equipos> ActualizarEquipos(Connection connection) {
+        boolean correcto = false;
+        List<Equipos> ListUpdate = new ArrayList<>();
+        String consulta = "UPDATE equipos SET id_equipo=?,equipo=?";
+        try (
+                PreparedStatement pstmt = connection.prepareStatement(consulta)) {
+            try (ResultSet resultado = pstmt.executeQuery()) {
+                while (resultado.next()) {
+                    Equipos equipo = new Equipos();
+                    equipo.setId_Equipo(resultado.getInt("id_equipo"));
+                    equipo.setEquipo(resultado.getString("equipo"));
+                    ListUpdate.add(equipo);
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return ListUpdate;
+    }
+
 
 }
