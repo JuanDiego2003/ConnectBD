@@ -91,4 +91,27 @@ public class ResenasDAO {
             System.out.println("No se pudo insertar el registro.");
         }
     }
+
+    public static List<Resenas> ActualizarResenas(Connection connection) {
+        List<Resenas> lista = new ArrayList<>();
+        String consulta = "UPDATE * FROM resenas";
+        try (
+                PreparedStatement pstmt = connection.prepareStatement(consulta)) {
+            try (ResultSet resultado = pstmt.executeQuery()) {
+                while (resultado.next()) {
+                    Resenas resenas = new Resenas();
+                    resenas.setId_Resena(resultado.getInt("id_resena"));
+                    resenas.setResena(resultado.getString("resena"));
+                    resenas.setId_Game(resultado.getInt("id_juego"));
+                    lista.add(resenas);
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return lista;
+    }
+
 }
