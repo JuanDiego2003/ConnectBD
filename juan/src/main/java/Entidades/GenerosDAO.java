@@ -8,9 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GenerosDAO {
-    public static List<Generos> ConsultarGeneros(Connection connection) {
+    public static List<Generos> ConsultarGeneros(Connection connection,int id_gene) {
         List<Generos> Lista = new ArrayList<>();
         String consulta = "SELECT * FROM generos";
+        if (id_gene >0){
+            consulta = "select * from generos where id_genero = "+id_gene;
+        }
         try (
                 PreparedStatement pstmt = connection.prepareStatement(consulta)) {
             try (ResultSet resultado = pstmt.executeQuery()) {
@@ -35,7 +38,7 @@ public class GenerosDAO {
         String consulta = "INSERT INTO generos (id_genero,genero) VALUES(?,?)";
         try (
                 PreparedStatement pstmt = connection.prepareStatement(consulta)) {
-            List<Generos> compararExistencia = ConsultarGeneros(connection);
+            List<Generos> compararExistencia = ConsultarGeneros(connection,-1);
             int id = compararExistencia.size();
             for (Generos genero : equipos) {
                 boolean repetido = false;

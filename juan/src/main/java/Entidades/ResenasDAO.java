@@ -8,9 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ResenasDAO {
-    public static List<Resenas> ConsultarResenas(Connection connection) {
+    public static List<Resenas> ConsultarResenas(Connection connection,int id_game) {
         List<Resenas> lista = new ArrayList<>();
         String consulta = "SELECT * FROM resenas";
+        if (id_game >0){
+            consulta = "select * from resenas where id_juego = "+id_game;
+        }else{
+
+        }
         try (
                 PreparedStatement pstmt = connection.prepareStatement(consulta)) {
             try (ResultSet resultado = pstmt.executeQuery()) {
@@ -37,7 +42,7 @@ public class ResenasDAO {
         Resenas aux = new Resenas();
         try (
                 PreparedStatement pstmt = connection.prepareStatement(consulta)) {
-            List<Resenas> compararExistencia = ConsultarResenas(connection);
+            List<Resenas> compararExistencia = ConsultarResenas(connection,-1);
             int id = compararExistencia.size();
             for (Resenas resena : resenas) {
                 aux = resena;

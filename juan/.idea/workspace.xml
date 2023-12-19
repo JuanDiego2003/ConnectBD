@@ -5,8 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="62936259-e641-4ffe-878e-1b5cb0d1b65e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Entidades/EquiposDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entidades/EquiposDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Entidades/GameEquipoDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entidades/GameEquipoDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Entidades/GameGeneroDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entidades/GameGeneroDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Entidades/GenerosDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entidades/GenerosDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Entidades/ResenasDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entidades/ResenasDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Entidades/GenerosDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Entidades/GenerosDAO.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,16 +44,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "Rama"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="App" />
-      <module name="juan" />
+      <module name="BDConexion_jj" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="BDConexion_jj" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="BDConexion_jj" />
+      <option name="filePath" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -79,5 +99,31 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/App.java</url>
+          <line>20</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Entidades/GenerosDAO.java</url>
+          <line>31</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/App.java</url>
+          <line>23</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Entidades/EquiposDAO.java</url>
+          <line>31</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

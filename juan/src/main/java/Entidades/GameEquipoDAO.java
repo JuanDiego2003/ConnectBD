@@ -8,15 +8,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameEquipoDAO {
-    public static List<GameEquipos> ConsultarGameEquipos(Connection connection) {
+    public static List<GameEquipos> ConsultarGameEquipos(Connection connection,int id_game) {
         List<GameEquipos> Lista = new ArrayList<>();
-        String consulta = "SELECT * FROM generos";
+        String consulta="SELECT * FROM juego_equipo";
+        if (id_game >0){
+            consulta = "select * from juego_equipo where id_juego = "+id_game;
+        }
         try (
                 PreparedStatement pstmt = connection.prepareStatement(consulta)) {
             try (ResultSet resultado = pstmt.executeQuery()) {
                 while (resultado.next()) {
                     GameEquipos genero = new GameEquipos();
-                    genero.setId_Game(resultado.getInt("id_genero"));
+                    genero.setId_Game(resultado.getInt("id_juego"));
                     genero.setId_Equipo(resultado.getInt("id_equipo"));
                     Lista.add(genero);
                 }
@@ -36,7 +39,7 @@ public class GameEquipoDAO {
         try (
                 PreparedStatement pstmt = connection.prepareStatement(consulta)) {
             for (Equipos equip : entidadPadre.getEquipos()) {
-                for (Equipos equipBD : EquiposDAO.ConsultarEquipos(connection)) {
+                for (Equipos equipBD : EquiposDAO.ConsultarEquipos(connection,-1)) {
                     pstmt.setInt(1, entidadPadre.getGames().getId_Game());
                     if (equip.getEquipo().equalsIgnoreCase(equipBD.getEquipo())) {
                         pstmt.setInt(2, equipBD.getId_Equipo());
