@@ -9,6 +9,7 @@ import Entidades.*;
 public class App {
     public static File file = new File("games.csv");
 
+    
     public static void main(String[] args) throws SQLException {
         DatosVO datosvo = new DatosVO();
         List<EntidadPadre> list = new ArrayList<>();
