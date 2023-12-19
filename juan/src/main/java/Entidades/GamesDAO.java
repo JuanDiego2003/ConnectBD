@@ -6,16 +6,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class GamesDAO {
-    public static List<Games> ConsultarGames( Connection connection) {
+    public static List<Games> ConsultarGames(boolean inicial, Connection connection) {
         List<Games> Lista = new ArrayList<>();
-        String consulta = "SELECT * FROM juegos";
+        String consulta = "";
+        if (inicial == true) {
+            consulta = "SELECT * FROM juegos";
+        } else {
+            consulta = ConstruirQuery();
+        }
         try (
                 PreparedStatement pstmt = connection.prepareStatement(consulta)) {
             try (ResultSet resultado = pstmt.executeQuery()) {
                 while (resultado.next()) {
-                    Games games =new Games();
+                    Games games = new Games();
                     games.setId_Game(resultado.getInt("id_juego"));
                     games.setTitulo(resultado.getString("titulo"));
                     games.setFecha_Lanzamiento(resultado.getDate("fecha_lanzamiento"));
@@ -62,7 +68,7 @@ public class GamesDAO {
             throw new RuntimeException(e);
         }
         if (filasAfectadas > 0) {
-            correcto=true;
+            correcto = true;
         }
         return correcto;
     }
@@ -86,6 +92,7 @@ public class GamesDAO {
             System.out.println("No se pudo insertar el registro.");
         }
     }
+
     public static void ActualizarGames(EntidadPadre entidadPadre, Connection connection) {
         boolean correcto = false;
         String consulta = "UPDATE juegos SET titulo=?,fecha_lanzamiento=?,calificacion=?,veces_listado=?,num_resenas=?,resumen=?,num_reproducciones=?,num_jugando=?,num_atrasos=?,num_lista_deseos=? WHERE id_juego = ?";
@@ -117,5 +124,42 @@ public class GamesDAO {
         } else {
             System.out.println("No se pudo insertar el registro.");
         }
+    }
+
+    public static String ConstruirQuery() {
+        String query = "Select * from juegos where ";
+        System.out.println("Como quieres filtrar");
+        System.out.println("1.Id");
+        System.out.println("2.Titulo");
+        System.out.println("3.Todo");
+        Scanner sc = new Scanner(System.in);
+        boolean valido = true;
+        do {
+            String cond = "";
+            switch (sc.nextLine()) {
+                case "1":
+                    do {
+                        System.out.println("Introduce un numero d id");
+                        cond = sc.nextLine();
+                    }while (cond.isEmpty());
+                    query += "id_juego = "+cond;
+                    break;
+                case "2":
+                    do {
+                        System.out.println("Introduce un titulo de juego");
+                        cond = sc.nextLine();
+                    }while (cond.isEmpty());
+                    query += "titulo like '%"+cond+"%'";
+                    break;
+                case "3":
+                    query = "SELECT * FROM equipos";
+                    break;
+                default:
+                    valido = false;
+                    System.out.println("Escoge una opcion valida");
+                    break;
+            }
+        } while (!valido);
+        return query;
     }
 }
