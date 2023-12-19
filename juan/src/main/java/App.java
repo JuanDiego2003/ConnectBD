@@ -3,6 +3,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import Entidades.*;
 import com.sun.tools.jconsole.JConsoleContext;
@@ -47,19 +48,115 @@ public class App {
         System.out.println("2. Actualizar datos");
         System.out.println("3. Eliminar datos");
         EntidadPadre entidadPadre= new EntidadPadre();
-        switch ("") {
+        InsertarTodosDatos(datosvo, list, true);
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Menu:");
+        System.out.println("1. Consultar datos");
+        System.out.println("2. Insertar datos");
+        System.out.println("3. Eliminar datos");
+        System.out.println("4. Actualizar datos");
+
+        System.out.print("Ingrese la opción deseada: ");
+        String opcion = scanner.nextLine();
+
+        switch (opcion.toLowerCase()) {
+            case "1":
             case "consultar":
-                InsertarTodosDatos( list, true);
+                System.out.print("Ingrese la tabla a consultar (games/equipos): ");
+                String tablaConsulta = scanner.nextLine();
+                switch (tablaConsulta.toLowerCase()) {
+                    case "games":
+                        GamesDAO.ConsultarGames(false, ConnectionDB.getInstance().getConnection());
+                        break;
+                    case "equipos":
+                        EquiposDAO.ConsultarEquipos(ConnectionDB.getInstance().getConnection());
+                        break;
+                    case "generos":
+                        GenerosDAO.ConsultarGeneros(ConnectionDB.getInstance().getConnection());
+                        break;
+                    case "reseñas":
+                        ResenasDAO.ConsultarResenas(ConnectionDB.getInstance().getConnection());
+                        break;
+                    default:
+                        System.out.println("Tabla no válida");
+                }
                 break;
+            case "2":
             case "insertar":
+                System.out.print("Ingrese la tabla a insertar (games/equipos/generos/reseñas): ");
+                String tablaInsercion = scanner.nextLine();
+                List<Equipos> listaEquipos = new ArrayList<>();
+                List<Generos> listageneros = new ArrayList<>();
+                List<Resenas> listaResena = new ArrayList<>();
+                switch (tablaInsercion.toLowerCase()) {
+                    case "games":
+                        GamesDAO.InsertarGames(entidadPadre,ConnectionDB.getInstance().getConnection());
+                        break;
+                    case "equipos":
+                        EquiposDAO.InsertarEquipos(listaEquipos,ConnectionDB.getInstance().getConnection());
+                        break;
+                    case "generos":
+                        GenerosDAO.InsertarGeneros(listageneros,ConnectionDB.getInstance().getConnection());
+                        break;
+                    case "reseñas":
+                        ResenasDAO.InsertarResenas(listaResena, ,ConnectionDB.getInstance().getConnection()));
+                        break;
+                    default:
+                        System.out.println("Tabla no válida");
+                }
                 break;
+            case "3":
             case "eliminar":
+                System.out.print("Ingrese la tabla a eliminar (games/equipos/generos/reseñas): ");
+                String tablaEliminacion = scanner.nextLine();
+                switch (tablaEliminacion.toLowerCase()) {
+                    case "games":
+                        GamesDAO.EliminarGames(entidadPadre,ConnectionDB.getInstance().getConnection());;
+                        break;
+                    case "equipos":
+                        EquiposDAO.EliminarEquipos( ,ConnectionDB.getInstance().getConnection());;
+                        break;
+                    case "generos":
+                        GenerosDAO.EliminarGeneros( ,ConnectionDB.getInstance().getConnection());;
+                        break;
+                    case "reseñas":
+                        ResenasDAO.EliminarResenas( ,ConnectionDB.getInstance().getConnection());;
+                        break;
+                    default:
+                        System.out.println("Tabla no válida");
+                }
                 break;
+            case "4":
             case "actualizar":
+                System.out.print("Ingrese la tabla a actualizar (games/equipos/generos/reseñas): ");
+                String tablaActualizacion = scanner.nextLine();
+                switch (tablaActualizacion.toLowerCase()) {
+                    case "games":
+                        GamesDAO.ActualizarGames(entidadPadre,ConnectionDB.getInstance().getConnection());
+                        break;
+                    case "equipos":
+                        EquiposDAO.ActualizarEquipos(ConnectionDB.getInstance().getConnection());
+                        break;
+                    case "generos":
+                        GenerosDAO.ActualizarGeneros(ConnectionDB.getInstance().getConnection());
+                        break;
+                    case "reseñas":
+                        ResenasDAO.ActualizarResenas(ConnectionDB.getInstance().getConnection());
+                        break;
+                    default:
+                        System.out.println("Tabla no válida");
+                }
                 break;
+            default:
+                System.out.println("Opción no válida");
         }
+
+        scanner.close();
     }
-        private static void InsertarTodosDatos(List<EntidadPadre> list, boolean inicial) {
+
+    private static void InsertarTodosDatos(DatosVO datosvo, List<EntidadPadre> list, boolean inicial) {
         try (Connection connection = ConnectionDB.getInstance().getConnection()) {
             if (inicial) {
                 if (GamesDAO.ConsultarGames(true,connection).isEmpty()) {
