@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EquiposDAO {
-    public static List<Equipos> ConsultarEquipos(Connection connection,int id_equipo) {
+    public static List<Equipos> ConsultarEquipos(Connection connection, int id_equipo) {
         List<Equipos> Lista = new ArrayList<>();
-        String consulta="SELECT * FROM equipos";
-        if (id_equipo >0){
-            consulta = "select * from equipos where id_equipo = "+id_equipo;
+        String consulta = "SELECT * FROM equipos";
+        if (id_equipo > 0) {
+            consulta = "select * from equipos where id_equipo = " + id_equipo;
         }
         try (
                 PreparedStatement pstmt = connection.prepareStatement(consulta)) {
@@ -38,7 +38,7 @@ public class EquiposDAO {
         String consulta = "INSERT INTO equipos (id_equipo,equipo) VALUES(?,?)";
         try (
                 PreparedStatement pstmt = connection.prepareStatement(consulta)) {
-            List<Equipos> compararExistencia = ConsultarEquipos(connection,-1);
+            List<Equipos> compararExistencia = ConsultarEquipos(connection, -1);
             int id = compararExistencia.size();
             for (Equipos equipo : equipos) {
                 boolean repetido = false;
@@ -88,22 +88,16 @@ public class EquiposDAO {
         }
     }
 
-    public static List<Equipos> ActualizarEquipos(Equipos equipos,Connection connection) {
+    public static List<Equipos> ActualizarEquipos(Equipos equipos, Connection connection) {
         boolean correcto = false;
         List<Equipos> ListUpdate = new ArrayList<>();
         String consulta = "UPDATE equipos SET id_equipo=?,equipo=?";
         try (
                 PreparedStatement pstmt = connection.prepareStatement(consulta)) {
-            try (ResultSet resultado = pstmt.executeQuery()) {
-                while (resultado.next()) {
-                    Equipos equipo = new Equipos();
-                    equipo.setId_Equipo(resultado.getInt("id_equipo"));
-                    equipo.setEquipo(resultado.getString("equipo"));
-                    ListUpdate.add(equipo);
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            pstmt.setString(1, equipos.getEquipo());
+            pstmt.setInt(1, equipos.getId_Equipo());
+            ListUpdate.add(equipos);
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

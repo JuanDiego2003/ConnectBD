@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ResenasDAO {
-    public static List<Resenas> ConsultarResenas(Connection connection,int id_game) {
+    public static List<Resenas> ConsultarResenas(Connection connection, int id_game) {
         List<Resenas> lista = new ArrayList<>();
         String consulta = "SELECT * FROM resenas";
-        if (id_game >0){
-            consulta = "select * from resenas where id_juego = "+id_game;
-        }else{
+        if (id_game > 0) {
+            consulta = "select * from resenas where id_juego = " + id_game;
+        } else {
 
         }
         try (
@@ -42,7 +42,7 @@ public class ResenasDAO {
         Resenas aux = new Resenas();
         try (
                 PreparedStatement pstmt = connection.prepareStatement(consulta)) {
-            List<Resenas> compararExistencia = ConsultarResenas(connection,-1);
+            List<Resenas> compararExistencia = ConsultarResenas(connection, -1);
             int id = compararExistencia.size();
             for (Resenas resena : resenas) {
                 aux = resena;
@@ -77,12 +77,12 @@ public class ResenasDAO {
         return correcto;
     }
 
-    public static void EliminarResenas(Resenas resenas, Connection connection) {
+    public static void EliminarResenas(int id, Connection connection) {
         boolean correcto = false;
         String consulta = "DELETE FROM resenas WHERE id_resena = ?";
         try (
                 PreparedStatement pstmt = connection.prepareStatement(consulta)) {
-            pstmt.setInt(1, resenas.getId_Resena());
+            pstmt.setInt(1, id);
             pstmt.executeUpdate();
             correcto = true;
             pstmt.executeUpdate();
@@ -97,22 +97,15 @@ public class ResenasDAO {
         }
     }
 
-    public static List<Resenas> ActualizarResenas(Connection connection) {
+    public static List<Resenas> ActualizarResenas(Resenas resenas, Connection connection) {
         List<Resenas> lista = new ArrayList<>();
-        String consulta = "UPDATE * FROM resenas";
+        String consulta = "UPDATE resenas set resena when id_resena=?";
         try (
                 PreparedStatement pstmt = connection.prepareStatement(consulta)) {
-            try (ResultSet resultado = pstmt.executeQuery()) {
-                while (resultado.next()) {
-                    Resenas resenas = new Resenas();
-                    resenas.setId_Resena(resultado.getInt("id_resena"));
-                    resenas.setResena(resultado.getString("resena"));
-                    resenas.setId_Game(resultado.getInt("id_juego"));
-                    lista.add(resenas);
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            pstmt.setString(1, resenas.getResena());
+            pstmt.setInt(1, resenas.getId_Resena());
+
+            lista.add(resenas);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

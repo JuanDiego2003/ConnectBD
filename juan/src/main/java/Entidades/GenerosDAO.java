@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GenerosDAO {
-    public static List<Generos> ConsultarGeneros(Connection connection,int id_gene) {
+    public static List<Generos> ConsultarGeneros(Connection connection, int id_gene) {
         List<Generos> Lista = new ArrayList<>();
         String consulta = "SELECT * FROM generos";
-        if (id_gene >0){
-            consulta = "select * from generos where id_genero = "+id_gene;
+        if (id_gene > 0) {
+            consulta = "select * from generos where id_genero = " + id_gene;
         }
         try (
                 PreparedStatement pstmt = connection.prepareStatement(consulta)) {
@@ -38,7 +38,7 @@ public class GenerosDAO {
         String consulta = "INSERT INTO generos (id_genero,genero) VALUES(?,?)";
         try (
                 PreparedStatement pstmt = connection.prepareStatement(consulta)) {
-            List<Generos> compararExistencia = ConsultarGeneros(connection,-1);
+            List<Generos> compararExistencia = ConsultarGeneros(connection, -1);
             int id = compararExistencia.size();
             for (Generos genero : equipos) {
                 boolean repetido = false;
@@ -90,22 +90,15 @@ public class GenerosDAO {
         }
     }
 
-    public static List<Generos> ActualizarGeneros(Connection connection) {
+    public static List<Generos> ActualizarGeneros(Generos genero, Connection connection) {
         boolean correcto = false;
         List<Generos> ListUpdate = new ArrayList<>();
-        String consulta = "UPDATE generos SET id_genero=?,genero=?";
-        try (
-                PreparedStatement pstmt = connection.prepareStatement(consulta)) {
-            try (ResultSet resultado = pstmt.executeQuery()) {
-                while (resultado.next()) {
-                    Generos genero = new Generos();
-                    genero.setId_genero(resultado.getInt("id_genero"));
-                    genero.setGenero(resultado.getString("genero"));
-                    ListUpdate.add(genero);
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+        String consulta = "UPDATE generos SET genero = ? WHERE id_genero = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(consulta)) {
+            pstmt.setString(1, genero.getGenero());
+            pstmt.setInt(2, genero.getId_genero());
+            pstmt.addBatch();
+            pstmt.executeBatch();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

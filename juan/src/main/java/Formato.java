@@ -78,7 +78,7 @@ public class Formato {
             formato[0] = "12";
         }
         java.util.Date fech = null;
-        if (!fecha.equalsIgnoreCase("releases on TBD")) {
+        if (!fecha.equalsIgnoreCase("releases on TBD")&&!fecha.isEmpty()) {
             fech = format.parse(formato[1] + "/" + formato[0] + "/" + formato[2]);
         } else {
             fech = format.parse("1/1/23");

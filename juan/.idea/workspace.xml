@@ -5,9 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="62936259-e641-4ffe-878e-1b5cb0d1b65e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/ObtenerDatosUsuario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Entidades/EquiposDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entidades/EquiposDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Entidades/GamesDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entidades/GamesDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Entidades/GenerosDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entidades/GenerosDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Entidades/ResenasDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entidades/ResenasDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Formato.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Formato.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,6 +20,13 @@
   </component>
   <component name="CodeStyleSettingsInfer">
     <option name="done" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
