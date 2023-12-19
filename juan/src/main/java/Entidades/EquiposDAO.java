@@ -88,7 +88,7 @@ public class EquiposDAO {
         }
     }
 
-    public static List<Equipos> ActualizarEquipos(Connection connection) {
+    public static List<Equipos> ActualizarEquipos(Equipos equipos,Connection connection) {
         boolean correcto = false;
         List<Equipos> ListUpdate = new ArrayList<>();
         String consulta = "UPDATE equipos SET id_equipo=?,equipo=?";
