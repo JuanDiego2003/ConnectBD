@@ -1,6 +1,6 @@
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 
 public class Formato {
     public static String[] listaString(String text, boolean porComas) {
@@ -47,7 +47,7 @@ public class Formato {
         return numero;
     }
 
-    public static Date formatoFecha(String fecha) throws ParseException {
+    public static java.sql.Date formatoFecha(String fecha) throws ParseException {
         String[] formato = fecha.split(" ");
 
         formato[1] = formato[1].replace(",", "");
@@ -77,12 +77,13 @@ public class Formato {
         } else if (formato[0].equalsIgnoreCase("dec")) {
             formato[0] = "12";
         }
-        Date fech = null;
+        java.util.Date fech = null;
         if (!fecha.equalsIgnoreCase("releases on TBD")) {
             fech = format.parse(formato[1] + "/" + formato[0] + "/" + formato[2]);
         } else {
             fech = format.parse("1/1/23");
         }
-        return fech;
+        java.sql.Date sqlDate = new java.sql.Date(fech.getTime());
+        return sqlDate;
     }
 }
